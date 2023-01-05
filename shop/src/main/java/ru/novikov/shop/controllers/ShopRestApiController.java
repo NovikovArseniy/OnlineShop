@@ -3,9 +3,10 @@ package ru.novikov.shop.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.novikov.shop.entities.Product;
-import ru.novikov.shop.repository.ProductRepository;
+import ru.novikov.shop.service.ProductService;
 
 import java.util.List;
 
@@ -14,10 +15,15 @@ import java.util.List;
 public class ShopRestApiController {
 
     @Autowired
-    ProductRepository productRepository;
+    ProductService productService;
 
     @GetMapping("/productlist")
     public List<Product> getAllProducts(){
-        return productRepository.findAll();
+        return productService.getAll();
+    }
+
+    @GetMapping("/getbyname")
+    public Product getProductByName(@RequestParam String name){
+        return productService.getByName(name);
     }
 }
