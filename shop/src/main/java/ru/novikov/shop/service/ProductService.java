@@ -1,6 +1,6 @@
 package ru.novikov.shop.service;
 
-import ru.novikov.shop.entities.Product;
+import ru.novikov.shop.model.Product;
 
 import java.util.List;
 

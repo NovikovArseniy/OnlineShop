@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Shop</title>
+</head>
+<body>
+<table>
+  <thead>
+  <tr>
+    <th> product name</th>
+    <th> amount</th>
+    <th> price</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:if="${cart.empty}">
+    <td colspan="3"> your order is empty </td>
+  </tr>
+  <tr th:each="entry : ${cart}">
+    <td><span th:text="${entry.key.productName}">product name</span></td>
+    <td><span th:text="${entry.value}">amount</span></td>
+    <td><span th:text="${entry.value * entry.key.productPrice}">description</span></td>
+  </tr>
+  </tbody>
+</table>
+<p th:text="${totalPrice}"></p>
+</body>
+</html>

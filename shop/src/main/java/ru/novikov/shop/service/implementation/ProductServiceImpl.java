@@ -2,7 +2,7 @@ package ru.novikov.shop.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.novikov.shop.entities.Product;
+import ru.novikov.shop.model.Product;
 import ru.novikov.shop.repository.ProductRepository;
 import ru.novikov.shop.service.ProductService;
 

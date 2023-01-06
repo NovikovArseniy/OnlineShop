@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Shop</title>
+    </head>
+    <body>
+        <table>
+            <thead>
+                <tr>
+                    <th> product name</th>
+                    <th> price</th>
+                    <th> description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${products.empty}">
+                    <td colspan="4"> No products available</td>
+                </tr>
+                <tr th:each="product : ${products}">
+                    <td><span th:text="${product.productName}">product name</span></td>
+                    <td><span th:text="${product.productPrice}">price</span></td>
+                    <td><span th:text="${product.productDescription}">description</span></td>
+                    <td>
+                        <form method="post" th:action="@{/addproduct(productName=${product.productName})}">
+                            <input type="submit" value="to cart"/>
+                        </form>
+                        <!--<a th:href="@{/addproduct(productName=${product.productName})}">to cart</a> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <form action="/cart">
+            <input type="submit" value="Cart" />
+        </form>
+        <form action="/test">
+            <input type="submit" value="test" />
+        </form>
+    </body>
+</html>

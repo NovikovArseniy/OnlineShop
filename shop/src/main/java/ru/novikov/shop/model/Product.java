@@ -1,15 +1,11 @@
-package ru.novikov.shop.entities;
+package ru.novikov.shop.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 @Entity
 @Table(name = "products")
-@Getter
-@Setter
-@RequiredArgsConstructor
+@Data
 public class Product {
 
     @Id
@@ -24,5 +20,5 @@ public class Product {
     private int productPrice;
 
     @Column(name = "productdescription")
-    private String ProductDescription;
+    private String productDescription;
 }
