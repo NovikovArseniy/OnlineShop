@@ -1,5 +1,6 @@
 package ru.novikov.shop.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -13,34 +14,43 @@ import ru.novikov.shop.service.ProductService;
 @Controller
 @RequestMapping("/")
 @Slf4j
-@Scope("session")
+@SessionAttributes("cart")
 public class ShopController {
 
     @Autowired
     private ProductService productService;
 
-    @Autowired
-    private Cart cart;
+    /*@ModelAttribute("cart")
+    public Cart createCart(){
+        return new Cart();
+    }*/
 
     @GetMapping
+    public String start(HttpSession session){
+        session.setAttribute("cart", new Cart());
+        return "redirect:/home";
+    }
+    @GetMapping("/home")
     public String homePage(Model model){
         model.addAttribute("products", productService.getAll());
         return "home";
     }
 
     @PostMapping("/addproduct")
-    public String addProduct(@RequestParam String productName){
+    public String addProduct(@RequestParam String productName, @SessionAttribute("cart") Cart cart,
+                             HttpSession session){
+        System.out.println(cart.getProducts());
         cart.addProduct(productService.getByName(productName));
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println(cart.getTotalPrice());
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @GetMapping("/cart")
-    public String test(Model model){
+    public String showCart(Model model, @SessionAttribute("cart") Cart cart){
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println(cart.getTotalPrice());
-        model.addAttribute("cart", cart.getProducts());
+        model.addAttribute("cartmap", cart.getProducts());
         model.addAttribute("totalPrice", cart.getTotalPrice());
         return "cart";
     }

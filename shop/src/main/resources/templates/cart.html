@@ -17,10 +17,10 @@
   </tr>
   </thead>
   <tbody>
-  <tr th:if="${cart.empty}">
+  <tr th:if="${cartmap.empty}">
     <td colspan="3"> your order is empty </td>
   </tr>
-  <tr th:each="entry : ${cart}">
+  <tr th:each="entry : ${cartmap}">
     <td><span th:text="${entry.key.productName}">product name</span></td>
     <td><span th:text="${entry.value}">amount</span></td>
     <td><span th:text="${entry.value * entry.key.productPrice}">description</span></td>

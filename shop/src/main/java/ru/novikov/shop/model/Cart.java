@@ -10,12 +10,16 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 
 @Data
-@Component
 public class Cart {
 
     @NonNull
     private HashMap<Product, Integer> products;
     private int totalPrice;
+
+    public Cart(){
+        this.products = new HashMap<>();
+        this.totalPrice = 0;
+    }
 
     public void addProduct(Product product){
         if (products.containsKey(product)){
