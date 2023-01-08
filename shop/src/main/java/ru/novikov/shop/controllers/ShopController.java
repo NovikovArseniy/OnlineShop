@@ -20,39 +20,38 @@ public class ShopController {
     @Autowired
     private ProductService productService;
 
-    /*@ModelAttribute("cart")
-    public Cart createCart(){
-        return new Cart();
-    }*/
-
     @GetMapping
     public String start(HttpSession session){
         session.setAttribute("cart", new Cart());
         return "redirect:/home";
     }
     @GetMapping("/home")
-    public String homePage(Model model){
+    public String homePage(Model model, @SessionAttribute("cart") Cart cart){
         model.addAttribute("products", productService.getAll());
+        model.addAttribute("cartmap", cart.getProducts());
+        model.addAttribute("totalPrice", cart.getTotalPrice());
         return "home";
     }
 
     @PostMapping("/addproduct")
     public String addProduct(@RequestParam String productName, @SessionAttribute("cart") Cart cart,
                              HttpSession session){
-        System.out.println(cart.getProducts());
         cart.addProduct(productService.getByName(productName));
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println(cart.getTotalPrice());
         return "redirect:/home";
     }
 
     @GetMapping("/cart")
     public String showCart(Model model, @SessionAttribute("cart") Cart cart){
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println(cart.getTotalPrice());
         model.addAttribute("cartmap", cart.getProducts());
         model.addAttribute("totalPrice", cart.getTotalPrice());
         return "cart";
     }
 
+    @PostMapping("/removeproduct")
+    public String removeProduct(@RequestParam String productName,
+                                @SessionAttribute("cart") Cart cart,
+                                HttpSession session){
+        cart.removeProduct(productService.getByName(productName));
+        return "redirect:/home";
+    }
 }
