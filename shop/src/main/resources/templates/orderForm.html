@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<form method="POST" th:action="@{/orders}" th:object="${order}">
+
+<label>Name: </label>
+<input type="text" th:field="*{name}"/>
+    <span class="validationError"
+
+          th:if="${#fields.hasErrors('name')}"
+
+          th:errors="*{name}">name Error</span>
+<br/>
+
+
+    <label>City: </label>
+
+    <input type="text" th:field="*{city}"/>
+    <span class="validationError"
+
+          th:if="${#fields.hasErrors('city')}"
+
+          th:errors="*{city}">City Error</span>
+    <br/>
+    <label>Address: </label>
+
+    <input type="text" th:field="*{address}"/>
+    <span class="validationError"
+
+          th:if="${#fields.hasErrors('address')}"
+
+          th:errors="*{address}">Address Error</span>
+
+    <br/>
+
+
+    <label>Phone number: </label>
+    <input type="text" th:field="*{phoneNumber}"/>
+    <span class="validationError"
+
+          th:if="${#fields.hasErrors('phoneNumber')}"
+
+          th:errors="*{phoneNumber}">Phone Num Error</span>
+
+  <br/>
+
+  <h3>Payment info</h3>
+
+  <label>Credit Card #: </label>
+
+  <input type="text" th:field="*{ccNumber}"/>
+    <span class="validationError"
+
+          th:if="${#fields.hasErrors('ccNumber')}"
+
+          th:errors="*{ccNumber}">CC Num Error</span>
+
+ <br/>
+
+ <label>Expiration: </label>
+
+  <input type="text" th:field="*{ccExpiration}"/>
+    <span class="validationError"
+
+          th:if="${#fields.hasErrors('ccExpiration')}"
+
+          th:errors="*{ccExpiration}">CC Expiration Error</span>
+
+  <br/>
+  <label>CVV: </label>
+
+  <input type="text" th:field="*{ccCVV}"/>
+    <span class="validationError"
+
+          th:if="${#fields.hasErrors('ccCVV')}"
+
+          th:errors="*{ccCVV}">CC CVV Error</span>
+
+  <br/>
+
+  <input type="submit" value="Submit order"/>
+
+  </form>
+
+</body>
+
+</html>

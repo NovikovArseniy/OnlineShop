@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
@@ -27,6 +28,9 @@ public class Product implements Serializable {
 
     @Column(name = "productdescription")
     private String productDescription;
+
+    @OneToMany(mappedBy = "product")
+    Set<OrdersToProducts> ordersToProductsSet;
 
     public Product(String productName, int productPrice, String productDescription){
         this(productName, productPrice);

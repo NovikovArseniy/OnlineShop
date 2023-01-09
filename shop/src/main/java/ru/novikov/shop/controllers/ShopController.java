@@ -14,19 +14,20 @@ import ru.novikov.shop.service.ProductService;
 @Controller
 @RequestMapping("/")
 @Slf4j
-@SessionAttributes("cart")
 public class ShopController {
 
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    Cart cart;
     @GetMapping
-    public String start(HttpSession session){
-        session.setAttribute("cart", new Cart());
+    public String start(){
+
         return "redirect:/home";
     }
     @GetMapping("/home")
-    public String homePage(Model model, @SessionAttribute("cart") Cart cart){
+    public String homePage(Model model){
         model.addAttribute("products", productService.getAll());
         model.addAttribute("cartmap", cart.getProducts());
         model.addAttribute("totalPrice", cart.getTotalPrice());
@@ -34,23 +35,20 @@ public class ShopController {
     }
 
     @PostMapping("/addproduct")
-    public String addProduct(@RequestParam String productName, @SessionAttribute("cart") Cart cart,
-                             HttpSession session){
+    public String addProduct(@RequestParam String productName){
         cart.addProduct(productService.getByName(productName));
         return "redirect:/home";
     }
 
     @GetMapping("/cart")
-    public String showCart(Model model, @SessionAttribute("cart") Cart cart){
+    public String showCart(Model model){
         model.addAttribute("cartmap", cart.getProducts());
         model.addAttribute("totalPrice", cart.getTotalPrice());
         return "cart";
     }
 
     @PostMapping("/removeproduct")
-    public String removeProduct(@RequestParam String productName,
-                                @SessionAttribute("cart") Cart cart,
-                                HttpSession session){
+    public String removeProduct(@RequestParam String productName){
         cart.removeProduct(productService.getByName(productName));
         return "redirect:/home";
     }
