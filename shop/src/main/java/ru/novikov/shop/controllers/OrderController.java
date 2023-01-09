@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.novikov.shop.model.Cart;
 import ru.novikov.shop.model.Order;
+import ru.novikov.shop.service.OrderService;
 
 @Controller
 @RequestMapping("/orders")
@@ -17,6 +18,9 @@ public class OrderController {
 
     @Autowired
     Cart cart;
+
+    @Autowired
+    OrderService orderService;
 
     @GetMapping("/current")
     public String orderForm(Model model){
@@ -28,6 +32,10 @@ public class OrderController {
         if (errors.hasErrors()){
             return "orderForm";
         }
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println(order);
+        orderService.addOrder(order);
+        cart.clear();
         return "redirect:/";
     }
 }

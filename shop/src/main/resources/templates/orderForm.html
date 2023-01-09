@@ -9,12 +9,12 @@
 <form method="POST" th:action="@{/orders}" th:object="${order}">
 
 <label>Name: </label>
-<input type="text" th:field="*{name}"/>
+<input type="text" th:field="*{customerName}"/>
     <span class="validationError"
 
-          th:if="${#fields.hasErrors('name')}"
+          th:if="${#fields.hasErrors('customerName')}"
 
-          th:errors="*{name}">name Error</span>
+          th:errors="*{customerName}">name Error</span>
 <br/>
 
 

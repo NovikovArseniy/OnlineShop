@@ -5,5 +5,5 @@ import ru.novikov.shop.model.Order;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-    Order getOrderByName(String orderName);
+    Order getOrderByCustomerName(String orderName);
 }

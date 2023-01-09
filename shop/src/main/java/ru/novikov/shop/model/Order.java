@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.util.Set;
 @Entity
 @Table(name = "orders")
 @NoArgsConstructor
+@ToString
 public class Order implements Serializable {
 
     @Id
@@ -25,7 +27,7 @@ public class Order implements Serializable {
 
     @NotBlank(message = "Name is required")
     @Column(name = "CustomerName")
-    private String name;
+    private String customerName;
 
     @NotBlank(message = "City is required")
     @Column(name = "City")

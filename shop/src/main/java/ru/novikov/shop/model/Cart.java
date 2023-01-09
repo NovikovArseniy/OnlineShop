@@ -46,4 +46,9 @@ public class Cart {
             return false;
         }
     }
+
+    public void clear(){
+        this.products = new HashMap<>();
+        this.totalPrice = 0;
+    }
 }

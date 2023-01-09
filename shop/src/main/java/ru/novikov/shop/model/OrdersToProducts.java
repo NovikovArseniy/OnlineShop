@@ -2,6 +2,7 @@ package ru.novikov.shop.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Data
