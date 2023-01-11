@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +25,6 @@ public class ShopController {
     Cart cart;
     @GetMapping
     public String start(){
-
         return "redirect:/home";
     }
     @GetMapping("/home")
@@ -51,5 +52,10 @@ public class ShopController {
     public String removeProduct(@RequestParam String productName){
         cart.removeProduct(productService.getByName(productName));
         return "redirect:/home";
+    }
+
+    public String getCurrentUsername() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
     }
 }
