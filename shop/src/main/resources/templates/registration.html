@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<form method="POST" th:action="@{/registration}" th:object="${user}">
+
+    <label>username: </label>
+    <input type="text" th:field="*{username}"/>
+    <span class="validationError"
+
+          th:if="${#fields.hasErrors('username')}"
+
+          th:errors="*{username}">name Error</span>
+    <br/>
+
+
+    <label>password: </label>
+
+    <input type="text" th:field="*{password}"/>
+    <span class="validationError"
+
+          th:if="${#fields.hasErrors('password')}"
+
+          th:errors="*{password}">password Error</span>
+    <br/>
+
+    <label>password confirm</label>
+
+    <input type="text" th:field="*{passwordConfirm}"/>
+    <span class="validationError"
+
+          th:if="${#fields.hasErrors('passwordConfirm')}"
+
+          th:errors="*{passwordConfirm}">password confirm Error</span>
+
+    <br/>
+    <label>Phone number: </label>
+    <input type="text" th:field="*{phoneNumber}"/>
+    <span class="validationError"
+
+          th:if="${#fields.hasErrors('phoneNumber')}"
+
+          th:errors="*{phoneNumber}">Phone Num Error</span>
+
+    <br/>
+
+    <input type="submit" value="Submit order"/>
+
+</form>
+
+</body>
+
+</html>
