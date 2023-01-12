@@ -8,16 +8,16 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.novikov.shop.model.Cart;
 import ru.novikov.shop.model.Order;
+import ru.novikov.shop.service.CartService;
 import ru.novikov.shop.service.OrderService;
 
 @Controller
 @RequestMapping("/orders")
 public class OrderController {
 
-    //@Autowired
-    //Cart cart;
+    @Autowired
+    CartService cartService;
 
     @Autowired
     OrderService orderService;
@@ -32,10 +32,8 @@ public class OrderController {
         if (errors.hasErrors()){
             return "orderForm";
         }
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println(order);
         orderService.addOrder(order);
-        //cart.clear();
+        cartService.clearCart(cartService.getCurrent());
         return "redirect:/home";
     }
 }

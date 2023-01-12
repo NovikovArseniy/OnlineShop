@@ -1,6 +1,6 @@
 package ru.novikov.shop.service.implementation;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.novikov.shop.model.Cart;
@@ -25,8 +25,9 @@ public class CartToProductsServiceImpl implements CartToProductsService {
     }
 
     @Override
-    public void deleteByCart(Cart cart) {
-        cartToProductsRepository.deleteByCart(cart);
+    @Transactional
+    public Integer deleteByCart(Cart cart) {
+        return cartToProductsRepository.removeByCart(cart);
     }
 
 
@@ -46,6 +47,12 @@ public class CartToProductsServiceImpl implements CartToProductsService {
     @Override
     public List<CartToProducts> getByCart(Cart cart) {
         return cartToProductsRepository.getByCart(cart);
+    }
+
+    @Override
+    @Transactional
+    public Integer deleteByCartAndProduct(Cart cart, Product product) {
+        return cartToProductsRepository.removeByCartAndProduct(cart, product);
     }
 
 

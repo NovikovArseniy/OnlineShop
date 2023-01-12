@@ -26,16 +26,7 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    /*
-    @NotBlank(message = "Name is required")
-    @Column(name = "CustomerName")
-    private String customerName;
 
-
-    @Pattern(regexp = "^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$", message = "Must be a valid phone number starting with +7")
-    @Column(name = "PhoneNumber")
-    private String phoneNumber;
-     */
     @NotBlank(message = "City is required")
     @Column(name = "City")
     private String city;

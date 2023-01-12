@@ -10,7 +10,7 @@ import ru.novikov.shop.service.UserService;
 
 import java.util.List;
 import java.util.Map;
-
+//TODO: нормальная сумма при запуске
 @Service
 public class CartServiceImpl implements CartService {
 
@@ -56,10 +56,19 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart removeProduct(Product product) {
-        //User user = userService.findCurrentUser();
-        //Cart cart = cartRepository.getReferenceById(user.getUserId());
-        //CartToProducts cartToProducts = cartToProductsService.getByCartAndProduct(cart, product);
-        return null;
+        User user = userService.findCurrentUser();
+        Cart cart = cartRepository.getReferenceById(user.getId());
+        CartToProducts cartToProducts = cartToProductsService.getByCartAndProduct(cart, product);
+        if (cartToProducts == null){
+            return cart;
+        } else if (cartToProducts.getAmount() == 1) {
+            cartToProductsService.deleteByCartAndProduct(cart, product);
+        } else {
+                cartToProducts.setAmount(cartToProducts.getAmount() - 1);
+                cartToProductsService.addCartToProducts(cartToProducts);
+        }
+        cart.setTotalPrice(calculateTotalPrice(cart));
+        return cartRepository.saveAndFlush(cart);
     }
 
     @Override
@@ -70,6 +79,13 @@ public class CartServiceImpl implements CartService {
     @Override
     public Cart getCurrent() {
         return cartRepository.getReferenceById(userService.findCurrentUser().getId());
+    }
+
+    @Override
+    public void clearCart(Cart cart) {
+        cart.setTotalPrice(0);
+        cartRepository.save(cart);
+        cartToProductsService.deleteByCart(cart);
     }
 
     public int calculateTotalPrice(Cart cart){

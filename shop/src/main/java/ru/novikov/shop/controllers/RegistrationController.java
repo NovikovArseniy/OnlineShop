@@ -31,8 +31,6 @@ public class RegistrationController {
         if (errors.hasErrors()){
             return "registration";
         }
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println(user);
         if (!user.getPassword().equals(user.getPasswordConfirm())){
             model.addAttribute("passwordError", "passwords do not match");
             return "registration";

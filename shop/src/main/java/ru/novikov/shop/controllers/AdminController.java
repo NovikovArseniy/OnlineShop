@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.novikov.shop.service.UserService;
-
+//TODO: полностью с доступом
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
