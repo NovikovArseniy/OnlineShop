@@ -8,7 +8,7 @@
 
 <form method="POST" th:action="@{/orders}" th:object="${order}">
 
-<label>Name: </label>
+<!--<label>Name: </label>
 <input type="text" th:field="*{customerName}"/>
     <span class="validationError"
 
@@ -16,6 +16,16 @@
 
           th:errors="*{customerName}">name Error</span>
 <br/>
+
+    <label>Phone number: </label>
+    <input type="text" th:field="*{phoneNumber}"/>
+    <span class="validationError"
+
+          th:if="${#fields.hasErrors('phoneNumber')}"
+
+          th:errors="*{phoneNumber}">Phone Num Error</span>
+
+    <br/> -->
 
 
     <label>City: </label>
@@ -39,15 +49,6 @@
     <br/>
 
 
-    <label>Phone number: </label>
-    <input type="text" th:field="*{phoneNumber}"/>
-    <span class="validationError"
-
-          th:if="${#fields.hasErrors('phoneNumber')}"
-
-          th:errors="*{phoneNumber}">Phone Num Error</span>
-
-  <br/>
 
   <h3>Payment info</h3>
 

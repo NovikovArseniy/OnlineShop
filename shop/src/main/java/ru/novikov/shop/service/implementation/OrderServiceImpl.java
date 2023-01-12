@@ -6,6 +6,7 @@ import ru.novikov.shop.model.*;
 import ru.novikov.shop.repository.OrderRepository;
 import ru.novikov.shop.service.OrderService;
 import ru.novikov.shop.service.OrdersToProductsService;
+import ru.novikov.shop.service.UserService;
 
 import java.util.Map;
 
@@ -17,10 +18,13 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     OrdersToProductsService ordersToProductsService;
     @Autowired
+    UserService userService;
+    @Autowired
     Cart cart;
 
     @Override
     public Order addOrder(Order order) {
+        order.setUser(userService.findCurrentUser());
         order = orderRepository.saveAndFlush(order);
         for (Map.Entry<Product, Integer> entry : cart.getProducts().entrySet()){
             OrdersToProducts ordersToProducts = new OrdersToProducts();
@@ -43,10 +47,10 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.deleteById(id);
     }
 
-    @Override
-    public Order getByName(String name) {
-        return orderRepository.getOrderByCustomerName(name);
-    }
+    //@Override
+    //public Order getByName(String name) {
+      //  return orderRepository.getOrderByCustomerName(name);
+    //}
 
     @Override
     public Order getById(int id) {

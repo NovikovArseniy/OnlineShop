@@ -36,6 +36,6 @@ public class OrderController {
         System.out.println(order);
         orderService.addOrder(order);
         cart.clear();
-        return "redirect:/";
+        return "redirect:/home";
     }
 }

@@ -1,16 +1,13 @@
 package ru.novikov.shop.controllers;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.novikov.shop.model.Cart;
-import ru.novikov.shop.model.Product;
 import ru.novikov.shop.service.ProductService;
 
 @Controller
@@ -25,7 +22,7 @@ public class ShopController {
     Cart cart;
     @GetMapping
     public String start(){
-        return "redirect:/home";
+        return "redirect:/login";
     }
     @GetMapping("/home")
     public String homePage(Model model){

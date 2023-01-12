@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
 import java.io.Serializable;
@@ -17,7 +16,6 @@ import java.util.Set;
 @Entity
 @Table(name = "orders")
 @NoArgsConstructor
-@ToString
 public class Order implements Serializable {
 
     @Id
@@ -25,10 +23,19 @@ public class Order implements Serializable {
     @Column(name = "OrderID")
     int orderId;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+    /*
     @NotBlank(message = "Name is required")
     @Column(name = "CustomerName")
     private String customerName;
 
+
+    @Pattern(regexp = "^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$", message = "Must be a valid phone number starting with +7")
+    @Column(name = "PhoneNumber")
+    private String phoneNumber;
+     */
     @NotBlank(message = "City is required")
     @Column(name = "City")
     private String city;
@@ -36,10 +43,6 @@ public class Order implements Serializable {
     @NotBlank(message = "Address is required")
     @Column(name = "Address")
     private String address;
-
-    @Pattern(regexp = "^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$", message = "Must be a valid phone number starting with +7")
-    @Column(name = "PhoneNumber")
-    private String phoneNumber;
 
     @Column(name = "PlacedAt")
     private Date placedAt;
