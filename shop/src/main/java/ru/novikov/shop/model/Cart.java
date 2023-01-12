@@ -1,18 +1,40 @@
 package ru.novikov.shop.model;
 
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.Set;
 
-@Data
-@Component
-@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
+
+//@Component
+//@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Getter
+@Setter
+@Entity
+@Table(name = "carts")
 public class Cart {
 
+    @Id
+    @Column(name = "user_id")
+    private Long userId;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    private int totalPrice;
+
+    @OneToMany(mappedBy = "cart")
+    Set<CartToProducts> cartToProductsSet;
+    /*
     @NonNull
     private HashMap<Product, Integer> products;
     private int totalPrice;
@@ -49,4 +71,6 @@ public class Cart {
         this.products = new HashMap<>();
         this.totalPrice = 0;
     }
+
+     */
 }

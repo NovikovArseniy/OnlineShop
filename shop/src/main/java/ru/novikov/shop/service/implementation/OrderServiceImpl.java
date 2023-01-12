@@ -19,13 +19,13 @@ public class OrderServiceImpl implements OrderService {
     OrdersToProductsService ordersToProductsService;
     @Autowired
     UserService userService;
-    @Autowired
-    Cart cart;
+    //@Autowired
+    //Cart cart;
 
     @Override
     public Order addOrder(Order order) {
         order.setUser(userService.findCurrentUser());
-        order = orderRepository.saveAndFlush(order);
+        order = orderRepository.saveAndFlush(order);/*
         for (Map.Entry<Product, Integer> entry : cart.getProducts().entrySet()){
             OrdersToProducts ordersToProducts = new OrdersToProducts();
             OrdersToProductsKey ordersToProductsKey = new OrdersToProductsKey();
@@ -38,12 +38,12 @@ public class OrderServiceImpl implements OrderService {
             System.out.println("!!!!!!!!!!!!!!!!!");
             System.out.println(ordersToProducts);
             ordersToProductsService.addOrdersToProducts(ordersToProducts);
-        }
+        }*/
         return order;
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         orderRepository.deleteById(id);
     }
 
@@ -53,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
     //}
 
     @Override
-    public Order getById(int id) {
+    public Order getById(Long id) {
         return orderRepository.getReferenceById(id);
     }
 }

@@ -16,7 +16,7 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "productid", nullable = false)
-    private int productId;
+    private Long productId;
 
     @Column(name = "productname")
     @NonNull
@@ -31,6 +31,9 @@ public class Product implements Serializable {
 
     @OneToMany(mappedBy = "product")
     Set<OrdersToProducts> ordersToProductsSet;
+
+    @OneToMany(mappedBy = "product")
+    Set<CartToProducts> cartToProductsSet;
 
     public Product(String productName, int productPrice, String productDescription){
         this(productName, productPrice);

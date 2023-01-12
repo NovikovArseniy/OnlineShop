@@ -21,7 +21,7 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "OrderID")
-    int orderId;
+    Long orderId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

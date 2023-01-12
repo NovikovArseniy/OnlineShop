@@ -4,8 +4,8 @@ import ru.novikov.shop.model.Order;
 
 public interface OrderService {
     Order addOrder(Order order);
-    void delete(int id);
+    void delete(Long id);
     //Order getByName(String name);
-    Order getById(int id);
+    Order getById(Long id);
     //List<Product> getAll();
 }

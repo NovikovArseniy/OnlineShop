@@ -9,10 +9,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.novikov.shop.model.Cart;
 import ru.novikov.shop.model.Role;
 import ru.novikov.shop.model.User;
 import ru.novikov.shop.repository.RoleRepository;
 import ru.novikov.shop.repository.UserRepository;
+import ru.novikov.shop.service.CartService;
 import ru.novikov.shop.service.UserService;
 
 import java.util.Collections;
@@ -30,6 +32,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    CartService cartService;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -65,6 +70,9 @@ public class UserServiceImpl implements UserService {
         user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+        Cart cart = new Cart();
+        cart.setUser(user);
+        cartService.addCart(cart);
         return true;
     }
 

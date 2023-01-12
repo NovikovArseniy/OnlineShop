@@ -16,8 +16,8 @@ import ru.novikov.shop.service.OrderService;
 @RequestMapping("/orders")
 public class OrderController {
 
-    @Autowired
-    Cart cart;
+    //@Autowired
+    //Cart cart;
 
     @Autowired
     OrderService orderService;
@@ -35,7 +35,7 @@ public class OrderController {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println(order);
         orderService.addOrder(order);
-        cart.clear();
+        //cart.clear();
         return "redirect:/home";
     }
 }

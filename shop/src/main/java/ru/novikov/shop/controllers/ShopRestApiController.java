@@ -31,7 +31,7 @@ public class ShopRestApiController {
         return productService.addProduct(new Product(productName, productPrice, productDescription));
     }
     @DeleteMapping(value = "/removeproduct")
-    public void removeProduct(@RequestParam int id){
+    public void removeProduct(@RequestParam Long id){
         productService.delete(id);
     }
 }

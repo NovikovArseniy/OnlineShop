@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,7 +14,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "t_user")
-@Data
+@Getter
+@Setter
 public class User implements UserDetails {
 
     @Id
@@ -36,6 +39,10 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private Set<Order> orders;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Cart cart;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
