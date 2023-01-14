@@ -6,12 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.novikov.shop.model.Cart;
+import ru.novikov.shop.model.Role;
+import ru.novikov.shop.model.User;
 import ru.novikov.shop.service.CartService;
 import ru.novikov.shop.service.ProductService;
+import ru.novikov.shop.service.UserService;
 
 @Controller
 @RequestMapping("/")
-@Slf4j
 public class ShopController {
 
     @Autowired
@@ -19,6 +21,9 @@ public class ShopController {
 
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public String start(){
@@ -30,6 +35,13 @@ public class ShopController {
         Cart cart = cartService.getCurrent();
         model.addAttribute("cartmap", cartService.getCartMap(cart));
         model.addAttribute("totalPrice", cart.getTotalPrice());
+        User user = userService.findCurrentUser();
+        System.out.println(user.getRoles().contains(new Role(2L, "ROLE_ADMIN")));
+        if (user.getRoles().contains(new Role(2L, "ROLE_ADMIN"))){
+            model.addAttribute("admin", true);
+        } else {
+            model.addAttribute("admin", false);
+        }
         return "home";
     }
 

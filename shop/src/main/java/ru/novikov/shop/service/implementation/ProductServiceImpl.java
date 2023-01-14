@@ -1,5 +1,6 @@
 package ru.novikov.shop.service.implementation;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.novikov.shop.model.Product;
@@ -20,6 +21,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         productRepository.deleteById(id);
     }

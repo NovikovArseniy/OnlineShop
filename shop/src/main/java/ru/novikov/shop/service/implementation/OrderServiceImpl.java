@@ -8,6 +8,8 @@ import ru.novikov.shop.service.CartService;
 import ru.novikov.shop.service.OrderService;
 import ru.novikov.shop.service.OrdersToProductsService;
 import ru.novikov.shop.service.UserService;
+
+import java.util.List;
 import java.util.Map;
 //TODO: map to list
 @Service
@@ -55,5 +57,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order getById(Long id) {
         return orderRepository.getReferenceById(id);
+    }
+
+    @Override
+    public List<Order> getAll() {
+        return orderRepository.findAll();
     }
 }

@@ -45,5 +45,8 @@
         <form action="/cart">
             <input type="submit" value="Cart" />
         </form>
+        <a href="admin.html"
+           th:href="@{/admin}"
+           th:if="${admin}">admin</a>
     </body>
 </html>
