@@ -1,8 +1,10 @@
 package ru.novikov.shop.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import ru.novikov.shop.model.Product;
 import ru.novikov.shop.service.OrderService;
@@ -30,6 +32,10 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    @GetMapping
+    public String adminHomePage(){
+        return "admin";
+    }
     @GetMapping("/gt/{userId}")
     public String gtUser(@PathVariable("userId") Long userId, Model model){
         model.addAttribute("allUsers", userService.usergtList(userId));
@@ -38,23 +44,30 @@ public class AdminController {
 
     @GetMapping("/productlist")
     public String getAllProducts(Model model){
-        model.addAttribute("productList", productService.getAll());
+        model.addAttribute("products", productService.getAll());
         return "productList";
     }
 
-    @PostMapping(value = "/addproduct")
-    public String addProduct(@RequestParam String productName,
-                              @RequestParam int productPrice,
-                              @RequestParam String productDescription){
-        productService.addProduct(new Product(productName, productPrice, productDescription));
-        return "redirect:/productList";
+    @GetMapping("/addproduct")
+    public String addProduct(Model model){
+        model.addAttribute("product", new Product());
+        return "addProduct";
+    }
+
+    @PostMapping("/addproduct")
+    public String addProductProcess(@Valid Product product, Errors errors){
+        if (errors.hasErrors()){
+            return "addProduct";
+        }
+        productService.addProduct(product);
+        return "redirect:/admin/productList";
     }
 
     //TODO:
-    @DeleteMapping(value = "/removeproduct")
+    @DeleteMapping("/removeproduct")
     public String removeProduct(@RequestParam Long id){
         productService.delete(id);
-        return "redirect:/productList";
+        return "redirect:/admin/productList";
     }
 
     @GetMapping("/userlist")

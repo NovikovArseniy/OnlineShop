@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<form method="POST" th:action="@{/admin/addproduct}" th:object="${product}">
+
+    <label>Product name:</label>
+
+    <input type="text" th:field="*{productName}"/>
+    <span class="validationError"
+
+          th:if="${#fields.hasErrors('productName')}"
+
+          th:errors="*{productName}">Name error</span>
+    <br/>
+    <label>Price:</label>
+
+    <input type="text" th:field="*{productPrice}"/>
+    <span class="validationError"
+
+          th:if="${#fields.hasErrors('productPrice')}"
+
+          th:errors="*{productPrice}">Address Error</span>
+    <br/>
+
+    <label>Description:</label>
+    <input type="text" th:field="*{productDescription}"/>
+    <br/>
+
+    <input type="submit" value="Submit product"/>
+
+</form>
+
+</body>
+
+</html>

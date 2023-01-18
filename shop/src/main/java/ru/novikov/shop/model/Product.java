@@ -1,6 +1,9 @@
 package ru.novikov.shop.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.io.Serializable;
@@ -21,10 +24,12 @@ public class Product implements Serializable {
 
     @Column(name = "productname")
     @NonNull
+    @NotBlank(message = "input name")
     private String productName;
 
     @Column(name = "productprice")
     @NonNull
+    @Min(value = 1, message = "must be positive")
     private int productPrice;
 
     @Column(name = "productdescription")
