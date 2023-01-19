@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Shop</title>
+</head>
+<body>
+<table>
+  <thead>
+  <tr>
+    <th> product name</th>
+    <th> amount</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:if="${orderToProductsList.empty}">
+    <td colspan="4"> something goes wrong</td>
+  </tr>
+  <tr th:each="entry : ${orderToProductsList}">
+    <td><span th:text="${entry.product.productName}">product name</span></td>
+    <td><span th:text="${entry.amount}">amount</span></td>
+  </tr>
+  </tbody>
+</table>
+<p>Total price</p>
+<p th:text="${totalPrice}"></p>
+</body>
+</html>

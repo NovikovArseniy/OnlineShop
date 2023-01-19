@@ -12,7 +12,9 @@ import java.util.Set;
 //TODO: названия столбцов
 @Entity
 @Table(name = "products")
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class Product implements Serializable {
@@ -35,9 +37,11 @@ public class Product implements Serializable {
     @Column(name = "productdescription")
     private String productDescription;
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "product")
     Set<OrdersToProducts> ordersToProductsSet;
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "product")
     Set<CartToProducts> cartToProductsSet;
 

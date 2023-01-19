@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import ru.novikov.shop.model.Order;
 import ru.novikov.shop.model.Product;
 import ru.novikov.shop.service.OrderService;
 import ru.novikov.shop.service.ProductService;
@@ -78,7 +79,22 @@ public class AdminController {
 
     @GetMapping("/orderListAdmin")
     public String orderList(Model model){
-        model.addAttribute("orderList", orderService.getAll());
+        model.addAttribute("orders", orderService.getAll());
         return "orderList";
+    }
+
+    @GetMapping("/orderListAdmin/{id}")
+    public String orderListByUserId(@PathVariable("id") Long userId, Model model){
+        model.addAttribute("orders", orderService.getByUser(userService.findUserById(userId)));
+        return "orderList";
+    }
+
+    @GetMapping("/orderInfo/{orderId}")
+    public String orderInfo(@PathVariable("orderId") Long orderId, Model model){
+        Order order = orderService.getById(orderId);
+        System.out.println(order.getOrdersToProductsSet().isEmpty());
+        model.addAttribute("orderToProductsList", order.getOrdersToProductsSet());
+        model.addAttribute("totalPrice", order.getTotalPrice());
+        return "orderInfo";
     }
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Shop</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th> username</th>
+        <th> password</th>
+        <th> phone number</th>
+        <th> orders</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${users.empty}">
+        <td colspan="4"> No users available</td>
+    </tr>
+    <tr th:each="usr : ${users}">
+        <td><span th:text="${usr.id}">id</span></td>
+        <td><span th:text="${usr.username}">username</span></td>
+        <td><span th:text="${usr.password}">password</span></td>
+        <td><span th:text="${usr.phoneNumber}">phone number</span></td>
+        <td>
+            <form method="get" th:action="@{/admin/orderListAdmin/{id}(id = ${usr.id})}">
+                <input type="submit" value="orders"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

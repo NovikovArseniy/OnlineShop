@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Shop</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>order id</th>
+        <th> username</th>
+        <th> city</th>
+        <th> address</th>
+        <th> date</th>
+        <th> more info</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${orders.empty}">
+        <td colspan="4"> No orders available</td>
+    </tr>
+    <tr th:each="order : ${orders}">
+        <td><span th:text="${order.orderId}">order id</span></td>
+        <td><span th:text="${order.user.username}">username</span></td>
+        <td><span th:text="${order.city}">city</span></td>
+        <td><span th:text="${order.address}">address</span></td>
+        <td><span th:text="${order.placedAt}">date</span></td>
+        <td>
+            <form method="get" th:action="@{/admin/orderInfo/{orderId}(orderId = ${order.orderId})}">
+                <input type="submit" value="more"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

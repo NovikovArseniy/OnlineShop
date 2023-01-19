@@ -4,15 +4,16 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @Entity
 @Table(name = "orders")
 @NoArgsConstructor
@@ -38,7 +39,8 @@ public class Order implements Serializable {
     @Column(name = "PlacedAt")
     private Date placedAt;
 
-    @OneToMany(mappedBy = "order")
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     Set<OrdersToProducts> ordersToProductsSet;
 
     @CreditCardNumber(message="Not a valid credit card number")
@@ -56,5 +58,13 @@ public class Order implements Serializable {
     @PrePersist
     void placedAt(){
         this.placedAt = new Date();
+    }
+
+    public int getTotalPrice(){
+        int result = 0;
+        for (OrdersToProducts entry : ordersToProductsSet){
+            result += entry.getAmount() * entry.getProduct().getProductPrice();
+        }
+        return result;
     }
 }
