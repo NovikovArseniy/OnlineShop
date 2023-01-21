@@ -8,9 +8,7 @@ import ru.novikov.shop.service.CartService;
 import ru.novikov.shop.service.CartToProductsService;
 import ru.novikov.shop.service.UserService;
 
-import java.util.List;
 import java.util.Map;
-//TODO: нормальная сумма при запуске
 @Service
 public class CartServiceImpl implements CartService {
 
@@ -48,9 +46,10 @@ public class CartServiceImpl implements CartService {
             cartToProductsKey.setProductId(product.getProductId());
             cartToProducts.setId(cartToProductsKey);
             cartToProducts.setAmount(1);
+            cart.getCartToProductsSet().add(cartToProducts);
         }
-        cart.setTotalPrice(calculateTotalPrice(cart));
         cartToProductsService.addCartToProducts(cartToProducts);
+        cart.calculateAndSetTotalPrice();
         return cartRepository.saveAndFlush(cart);
     }
 
@@ -63,11 +62,13 @@ public class CartServiceImpl implements CartService {
             return cart;
         } else if (cartToProducts.getAmount() == 1) {
             cartToProductsService.deleteByCartAndProduct(cart, product);
+            cart.getCartToProductsSet().remove(cartToProducts);
         } else {
                 cartToProducts.setAmount(cartToProducts.getAmount() - 1);
                 cartToProductsService.addCartToProducts(cartToProducts);
         }
-        cart.setTotalPrice(calculateTotalPrice(cart));
+        cart = cartRepository.getReferenceById(user.getId());
+        cart.calculateAndSetTotalPrice();
         return cartRepository.saveAndFlush(cart);
     }
 
@@ -88,12 +89,12 @@ public class CartServiceImpl implements CartService {
         cartToProductsService.deleteByCart(cart);
     }
 
-    public int calculateTotalPrice(Cart cart){
+    /*public int calculateTotalPrice(Cart cart){
         int totalPrice = 0;
         List<CartToProducts> cartToProductsList = cartToProductsService.getByCart(cart);
         for (CartToProducts entry : cartToProductsList){
             totalPrice += entry.getProduct().getProductPrice() * entry.getAmount();
         }
         return totalPrice;
-    }
+    }*/
 }

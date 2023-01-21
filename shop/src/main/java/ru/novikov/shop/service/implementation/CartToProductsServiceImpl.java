@@ -32,6 +32,7 @@ public class CartToProductsServiceImpl implements CartToProductsService {
 
 
     @Override
+    @Transactional
     public CartToProducts getByCartAndProduct(Cart cart, Product product) {
         return cartToProductsRepository.getByCartAndProduct(cart, product);
     }

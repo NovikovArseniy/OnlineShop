@@ -22,6 +22,15 @@ public class Cart {
 
     private int totalPrice;
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
     Set<CartToProducts> cartToProductsSet;
+
+    public int calculateAndSetTotalPrice(){
+        int result = 0;
+        for (CartToProducts entry : cartToProductsSet){
+            result += entry.getAmount() * entry.getProduct().getProductPrice();
+        }
+        this.setTotalPrice(result);
+        return result;
+    }
 }
