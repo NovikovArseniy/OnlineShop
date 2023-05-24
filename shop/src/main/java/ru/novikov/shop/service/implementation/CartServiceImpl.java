@@ -1,5 +1,7 @@
 package ru.novikov.shop.service.implementation;
 
+import jakarta.transaction.Transactional;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.novikov.shop.model.*;
@@ -9,13 +11,12 @@ import ru.novikov.shop.service.CartToProductsService;
 import ru.novikov.shop.service.UserService;
 
 import java.util.Map;
+
 @Service
 public class CartServiceImpl implements CartService {
 
     @Autowired
     CartRepository cartRepository;
-    @Autowired
-    UserService userService;
     @Autowired
     CartToProductsService cartToProductsService;
 
@@ -26,13 +27,13 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart getById(int id) {
-        return null;
+    public Cart getById(Long id) {
+        return cartRepository.getReferenceById(id);
     }
 
     @Override
-    public Cart addProduct(Product product) {
-        User user = userService.findCurrentUser();
+    @Transactional
+    public Cart addProduct(Product product, User user) {
         Cart cart = cartRepository.getReferenceById(user.getId());
         CartToProducts cartToProducts = cartToProductsService.getByCartAndProduct(cart, product);
         if (cartToProducts != null) {
@@ -54,9 +55,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart removeProduct(Product product) {
-        User user = userService.findCurrentUser();
-        Cart cart = cartRepository.getReferenceById(user.getId());
+    @Transactional
+    public Cart removeProduct(Product product, User user) {
+        Cart cart = Hibernate.unproxy(cartRepository.getReferenceById(user.getId()), Cart.class);
         CartToProducts cartToProducts = cartToProductsService.getByCartAndProduct(cart, product);
         if (cartToProducts == null){
             return cart;
@@ -78,23 +79,18 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart getCurrent() {
-        return cartRepository.getReferenceById(userService.findCurrentUser().getId());
+    public Cart getCurrent(User user) {
+        return cartRepository.getReferenceById(user.getId());
     }
 
     @Override
-    public void clearCart(Cart cart) {
+    @Transactional
+    public void clearCart(User user) {
+        Cart cart = getCurrent(user);
         cart.setTotalPrice(0);
+        cart.getCartToProductsSet().clear();
         cartRepository.save(cart);
         cartToProductsService.deleteByCart(cart);
     }
 
-    /*public int calculateTotalPrice(Cart cart){
-        int totalPrice = 0;
-        List<CartToProducts> cartToProductsList = cartToProductsService.getByCart(cart);
-        for (CartToProducts entry : cartToProductsList){
-            totalPrice += entry.getProduct().getProductPrice() * entry.getAmount();
-        }
-        return totalPrice;
-    }*/
 }

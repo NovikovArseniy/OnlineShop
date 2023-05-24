@@ -3,9 +3,8 @@ package ru.novikov.shop.service;
 import ru.novikov.shop.model.Cart;
 import ru.novikov.shop.model.CartToProducts;
 import ru.novikov.shop.model.Product;
-
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface CartToProductsService {
 
@@ -17,7 +16,7 @@ public interface CartToProductsService {
 
     Map<Product, Integer> getCartMap(Cart cart);
 
-    List<CartToProducts> getByCart(Cart cart);
+    Set<CartToProducts> getByCart(Cart cart);
 
     Integer deleteByCartAndProduct(Cart cart, Product product);
 }

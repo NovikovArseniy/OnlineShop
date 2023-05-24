@@ -6,7 +6,7 @@ import ru.novikov.shop.model.User;
 import java.util.List;
 
 public interface OrderService {
-    Order addOrder(Order order);
+    Order addOrder(Order order, User user);
     void delete(Long id);
     Order getById(Long id);
 

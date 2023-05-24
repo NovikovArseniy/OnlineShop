@@ -5,7 +5,7 @@ import ru.novikov.shop.model.Cart;
 import ru.novikov.shop.model.CartToProducts;
 import ru.novikov.shop.model.Product;
 
-import java.util.List;
+import java.util.Set;
 
 public interface CartToProductsRepository extends JpaRepository<CartToProducts, Long> {
 
@@ -13,7 +13,7 @@ public interface CartToProductsRepository extends JpaRepository<CartToProducts, 
 
     CartToProducts getByCartAndProduct(Cart cart, Product product);
 
-    List<CartToProducts> getByCart(Cart cart);
+    Set<CartToProducts> getByCart(Cart cart);
 
     Integer removeByCartAndProduct(Cart cart, Product product);
 }

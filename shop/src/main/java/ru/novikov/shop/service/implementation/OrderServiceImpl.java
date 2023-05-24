@@ -25,10 +25,10 @@ public class OrderServiceImpl implements OrderService {
     UserService userService;
 
     @Override
-    public Order addOrder(Order order) {
-        order.setUser(userService.findCurrentUser());
+    public Order addOrder(Order order, User user) {
+        order.setUser(user);
         order = orderRepository.saveAndFlush(order);
-        Cart cart = cartService.getCurrent();
+        Cart cart = cartService.getCurrent(user);
         Map<Product, Integer> productMap = cartService.getCartMap(cart);
         for (Map.Entry<Product, Integer> entry : productMap.entrySet()){
             OrdersToProducts ordersToProducts = new OrdersToProducts();
@@ -48,11 +48,6 @@ public class OrderServiceImpl implements OrderService {
     public void delete(Long id) {
         orderRepository.deleteById(id);
     }
-
-    //@Override
-    //public Order getByName(String name) {
-      //  return orderRepository.getOrderByCustomerName(name);
-    //}
 
     @Override
     public Order getById(Long id) {

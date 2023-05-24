@@ -1,7 +1,8 @@
 package ru.novikov.shop.controllers;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,10 +33,10 @@ public class ShopController {
     @GetMapping("/home")
     public String homePage(Model model){
         model.addAttribute("products", productService.getAll());
-        Cart cart = cartService.getCurrent();
+        Cart cart = cartService.getCurrent(findCurrentUser());
         model.addAttribute("cartmap", cartService.getCartMap(cart));
         model.addAttribute("totalPrice", cart.getTotalPrice());
-        User user = userService.findCurrentUser();
+        User user = findCurrentUser();
         System.out.println(user.getRoles().contains(new Role(2L, "ROLE_ADMIN")));
         if (user.getRoles().contains(new Role(2L, "ROLE_ADMIN"))){
             model.addAttribute("admin", true);
@@ -47,13 +48,13 @@ public class ShopController {
 
     @PostMapping("/addproduct")
     public String addProduct(@RequestParam String productName){
-        cartService.addProduct(productService.getByName(productName));
+        cartService.addProduct(productService.getByName(productName), findCurrentUser());
         return "redirect:/home";
     }
 
     @GetMapping("/cart")
     public String showCart(Model model){
-        Cart cart = cartService.getCurrent();
+        Cart cart = cartService.getCurrent(findCurrentUser());
         model.addAttribute("cartmap", cartService.getCartMap(cart));
         model.addAttribute("totalPrice", cart.getTotalPrice());
         return "cart";
@@ -61,8 +62,11 @@ public class ShopController {
 
     @PostMapping("/removeproduct")
     public String removeProduct(@RequestParam String productName){
-        cartService.removeProduct(productService.getByName(productName));
+        cartService.removeProduct(productService.getByName(productName), findCurrentUser());
         return "redirect:/home";
     }
-
+    public User findCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userService.findByUsername(auth.getName());
+    }
 }

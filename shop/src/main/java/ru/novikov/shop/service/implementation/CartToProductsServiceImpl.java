@@ -9,8 +9,8 @@ import ru.novikov.shop.model.Product;
 import ru.novikov.shop.repository.CartToProductsRepository;
 import ru.novikov.shop.service.CartToProductsService;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,14 +39,14 @@ public class CartToProductsServiceImpl implements CartToProductsService {
 
     @Override
     public Map<Product, Integer> getCartMap(Cart cart) {
-        List<CartToProducts> cartToProductsList = cartToProductsRepository.getByCart(cart);
+        Set<CartToProducts> cartToProductsList = cartToProductsRepository.getByCart(cart);
         Map<Product, Integer> cartMap = cartToProductsList.stream()
                 .collect(Collectors.toMap(CartToProducts::getProduct, CartToProducts::getAmount));
         return cartMap;
     }
 
     @Override
-    public List<CartToProducts> getByCart(Cart cart) {
+    public Set<CartToProducts> getByCart(Cart cart) {
         return cartToProductsRepository.getByCart(cart);
     }
 
