@@ -37,7 +37,6 @@ public class ShopController {
         model.addAttribute("cartmap", cartService.getCartMap(cart));
         model.addAttribute("totalPrice", cart.getTotalPrice());
         User user = findCurrentUser();
-        System.out.println(user.getRoles().contains(new Role(2L, "ROLE_ADMIN")));
         if (user.getRoles().contains(new Role(2L, "ROLE_ADMIN"))){
             model.addAttribute("admin", true);
         } else {

@@ -61,14 +61,14 @@ public class AdminController {
             return "addProduct";
         }
         productService.addProduct(product);
-        return "redirect:/admin/productList";
+        return "redirect:/admin/productlist";
     }
 
     //TODO:
     @DeleteMapping("/removeproduct")
     public String removeProduct(@RequestParam Long id){
         productService.delete(id);
-        return "redirect:/admin/productList";
+        return "redirect:/admin/productlist";
     }
 
     @GetMapping("/userlist")
