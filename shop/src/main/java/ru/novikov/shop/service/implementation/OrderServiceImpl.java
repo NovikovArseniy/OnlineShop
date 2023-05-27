@@ -1,5 +1,7 @@
 package ru.novikov.shop.service.implementation;
 
+import jakarta.transaction.Transactional;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.novikov.shop.model.*;
@@ -21,10 +23,9 @@ public class OrderServiceImpl implements OrderService {
     OrderRepository orderRepository;
     @Autowired
     OrdersToProductsService ordersToProductsService;
-    @Autowired
-    UserService userService;
 
     @Override
+    @Transactional
     public Order addOrder(Order order, User user) {
         order.setUser(user);
         order = orderRepository.saveAndFlush(order);
@@ -41,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
             ordersToProducts.setAmount(entry.getValue());
             ordersToProductsService.addOrdersToProducts(ordersToProducts);
         }
-        return order;
+        return getById(order.getOrderId());
     }
 
     @Override
