@@ -92,7 +92,6 @@ public class AdminController {
     @GetMapping("/orderInfo/{orderId}")
     public String orderInfo(@PathVariable("orderId") Long orderId, Model model){
         Order order = orderService.getById(orderId);
-        System.out.println(order.getOrdersToProductsSet().isEmpty());
         model.addAttribute("orderToProductsList", order.getOrdersToProductsSet());
         model.addAttribute("totalPrice", order.getTotalPrice());
         return "orderInfo";

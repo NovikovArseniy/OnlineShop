@@ -1,7 +1,6 @@
 package ru.novikov.shop.service.implementation;
 
 import jakarta.transaction.Transactional;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.novikov.shop.model.*;
@@ -9,7 +8,6 @@ import ru.novikov.shop.repository.OrderRepository;
 import ru.novikov.shop.service.CartService;
 import ru.novikov.shop.service.OrderService;
 import ru.novikov.shop.service.OrdersToProductsService;
-import ru.novikov.shop.service.UserService;
 
 import java.util.List;
 import java.util.Map;
